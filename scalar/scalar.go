@@ -31,9 +31,6 @@ func New(config ...Config) fiber.Handler {
 		if len(cfg.Title) == 0 {
 			cfg.Title = configDefault.Title
 		}
-		if len(cfg.ProxyUrl) == 0 {
-			cfg.ProxyUrl = configDefault.ProxyUrl
-		}
 		if len(cfg.RawSpecUrl) == 0 {
 			cfg.RawSpecUrl = configDefault.RawSpecUrl
 		}

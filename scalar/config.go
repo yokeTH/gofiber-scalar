@@ -58,6 +58,5 @@ var configDefault = Config{
 	Path:       "docs",
 	Title:      "Fiber API documentation",
 	CacheAge:   60,
-	ProxyUrl:   "https://proxy.scalar.com",
 	RawSpecUrl: "doc.json",
 }
