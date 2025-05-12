@@ -53,7 +53,7 @@ jobs:
           token: ${{ secrets.PAT }}
           commit-message: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           committer: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           title: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           body: "This PR updates `scalar.min.js` to the latest version of the Scalar API Reference."
           branch: update-scalar-${{ steps.get_version.outputs.version }}
