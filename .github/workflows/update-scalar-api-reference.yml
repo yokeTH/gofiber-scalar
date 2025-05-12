@@ -63,4 +63,4 @@ jobs:
           title: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           body: "This PR updates scalar.min.js to the latest version of the Scalar API Reference."
           base: main
-          head: update-scalar-${{ steps.get_version.outputs.version }}
+          branch: update-scalar-${{ steps.get_version.outputs.version }}
