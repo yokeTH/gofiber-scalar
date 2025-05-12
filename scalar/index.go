@@ -19,26 +19,7 @@ const templateHTML = `
 
   <body>
     <div id="app"></div>
-
     <script>
-      if (!navigator.onLine) {
-        var script = document.createElement('script');
-        script.src = '{{ .Extra.FallbackUrl }}';
-        script.onload = initScalar;
-        document.head.appendChild(script);
-      } else {
-        var cdn = document.createElement('script');
-        cdn.src = 'https://cdn.jsdelivr.net/npm/@scalar/api-reference';
-        cdn.onload = initScalar;
-        cdn.onerror = function () {
-          var fallback = document.createElement('script');
-          fallback.src = '{{ .Extra.FallbackUrl }}';
-          fallback.onload = initScalar;
-          document.head.appendChild(fallback);
-        };
-        document.head.appendChild(cdn);
-      }
-
       function initScalar() {
         if (typeof Scalar !== 'undefined') {
           Scalar.createApiReference('#app', {
@@ -47,8 +28,12 @@ const templateHTML = `
             proxyUrl: "{{.ProxyUrl}}",
             {{ end }}
           });
+        }else{
+	      console.error("Failed to load Scalar API Reference");
+	      document.querySelector('#app').innerHTML = "<p>Something went wrong. Please report this bug at <a href='https://github.com/yokeTH/gofiber-scalar/issues'>https://github.com/yokeTH/gofiber-scalar/issues</a></p>";
         }
       }
     </script>
+    <script src="{{ .Extra.FallbackUrl }}" onload="initScalar()" ></script>
   </body>
 </html>`
