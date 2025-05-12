@@ -23,7 +23,7 @@ go mod init github.com/<user>/<repo>
 ```
 And then install the Scalar middleware:
 ```bash
-go get github.com/yokeTH/gofiber-scalar
+go get github.com/yokeTH/gofiber-scalar/scalar
 ```
 
 ### Examples
@@ -38,7 +38,7 @@ import (
   "YOUR_MODULE/docs"
 
   "github.com/gofiber/fiber/v2"
-  "github.com/yokeTH/gofiber-scalar"
+  "github.com/yokeTH/gofiber-scalar/scalar"
 )
 ```
 
