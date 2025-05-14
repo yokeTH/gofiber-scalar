@@ -53,7 +53,7 @@ func New(config ...Config) fiber.Handler {
 
 	html, err := template.New("index.html").Parse(templateHTML)
 	if err != nil {
-		panic(fmt.Errorf("Failed to parse html template:%v", err))
+		panic(fmt.Errorf("failed to parse html template:%v", err))
 	}
 
 	htmlData := struct {
@@ -87,7 +87,7 @@ func New(config ...Config) fiber.Handler {
 			return ctx.SendString(rawSpec)
 		}
 
-		if !(ctx.Path() == scalarUIPath || ctx.Path() == specURL) {
+		if ctx.Path() != scalarUIPath && ctx.Path() != specURL {
 			return ctx.Next()
 		}
 
