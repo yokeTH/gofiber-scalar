@@ -64,4 +64,3 @@ jobs:
           labels: |
             🤖 Dependencies
           assignees: yokeTH
-          reviewers: yokeTH
