@@ -39,6 +39,7 @@ import (
 
   "github.com/gofiber/fiber/v2"
   "github.com/yokeTH/gofiber-scalar/scalar"
+  "github.com/swaggo/swag" // for register docs
 )
 ```
 
