@@ -23,3 +23,10 @@ go.work.sum
 
 # env file
 .env
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
