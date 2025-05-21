@@ -44,19 +44,24 @@ type Config struct {
 	CustomStyle template.CSS
 
 	// Proxy to avoid CORS issues
-	// Optional. Default: "https://proxy.scalar.com"
+	// Optional.
 	ProxyUrl string
 
 	// Raw Space Url
 	// Optional. Default: doc.json
 	RawSpecUrl string
+
+	// ForceOffline
+	// Optional: Default: true
+	ForceOffline bool
 }
 
 var configDefault = Config{
-	Next:       nil,
-	BasePath:   "/",
-	Path:       "docs",
-	Title:      "Fiber API documentation",
-	CacheAge:   60,
-	RawSpecUrl: "doc.json",
+	Next:         nil,
+	BasePath:     "/",
+	Path:         "docs",
+	Title:        "Fiber API documentation",
+	CacheAge:     60,
+	RawSpecUrl:   "doc.json",
+	ForceOffline: true,
 }

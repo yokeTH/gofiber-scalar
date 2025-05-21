@@ -34,6 +34,9 @@ func New(config ...Config) fiber.Handler {
 		if len(cfg.RawSpecUrl) == 0 {
 			cfg.RawSpecUrl = configDefault.RawSpecUrl
 		}
+		if !cfg.ForceOffline {
+			cfg.ForceOffline = configDefault.ForceOffline
+		}
 	}
 
 	rawSpec := cfg.FileContentString
