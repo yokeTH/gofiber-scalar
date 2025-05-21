@@ -37,6 +37,9 @@ func New(config ...Config) fiber.Handler {
 		if !cfg.ForceOffline {
 			cfg.ForceOffline = configDefault.ForceOffline
 		}
+		if cfg.FallbackCacheAge == 0 {
+			cfg.FallbackCacheAge = configDefault.FallbackCacheAge
+		}
 	}
 
 	rawSpec := cfg.FileContentString
@@ -76,6 +79,7 @@ func New(config ...Config) fiber.Handler {
 
 		// fallback js
 		if ctx.Path() == jsFallbackPath {
+			ctx.Set("Cache-Control", fmt.Sprintf("public, max-age=%d", cfg.FallbackCacheAge))
 			return ctx.Send(embeddedJS)
 		}
 

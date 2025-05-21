@@ -54,14 +54,20 @@ type Config struct {
 	// ForceOffline
 	// Optional: Default: true
 	ForceOffline bool
+
+	// Fallback scalar cache
+	//
+	// Optional. Default: 86400 (1 Days)
+	FallbackCacheAge int
 }
 
 var configDefault = Config{
-	Next:         nil,
-	BasePath:     "/",
-	Path:         "docs",
-	Title:        "Fiber API documentation",
-	CacheAge:     60,
-	RawSpecUrl:   "doc.json",
-	ForceOffline: true,
+	Next:             nil,
+	BasePath:         "/",
+	Path:             "docs",
+	Title:            "Fiber API documentation",
+	CacheAge:         60,
+	RawSpecUrl:       "doc.json",
+	ForceOffline:     true,
+	FallbackCacheAge: 86400,
 }
