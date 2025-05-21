@@ -23,7 +23,7 @@ go mod init github.com/<user>/<repo>
 ```
 And then install the Scalar middleware:
 ```bash
-go get github.com/yokeTH/gofiber-scalar/scalar
+go get -u github.com/yokeTH/gofiber-scalar/scalar
 ```
 
 ### Examples
@@ -39,7 +39,7 @@ import (
 
   "github.com/gofiber/fiber/v2"
   "github.com/yokeTH/gofiber-scalar/scalar"
-  "github.com/swaggo/swag" // for register docs
+  "github.com/swaggo/swag" // for register docs DO NOT USE v2
 )
 ```
 
@@ -55,7 +55,7 @@ app.Use(scalar.New())
 ```
 Now you can access scalar API documentation UI at `{HOSTNAME}/docs` and JSON documentation at `{HOSTNAME}/docs/doc.json`. Additionally, you can modify the path by configuring the middleware to suit your application's requirements.
 
-Using as the handler:
+Using as the handler: for an example `localhost:8080/yourpath`
 
 ```go
 app.Get("/yourpath/*", scalar.New(scalar.Config{
@@ -125,23 +125,34 @@ type Config struct {
 	CustomStyle template.CSS
 
 	// Proxy to avoid CORS issues
-	// Optional. Default: ""
+	// Optional.
 	ProxyUrl string
 
 	// Raw Space Url
 	// Optional. Default: doc.json
 	RawSpecUrl string
+
+	// ForceOffline
+	// Optional: Default: true
+	ForceOffline bool
+
+	// Fallback scalar cache
+	//
+	// Optional. Default: 86400 (1 Days)
+	FallbackCacheAge int
 }
 ```
 
 ### Default Config
 ```go
 var configDefault = Config{
-	Next:       nil,
-	BasePath:   "/",
-	Path:       "docs",
-	Title:      "Fiber API documentation",
-	CacheAge:   60,
-	RawSpecUrl: "doc.json",
+	Next:             nil,
+	BasePath:         "/",
+	Path:             "docs",
+	Title:            "Fiber API documentation",
+	CacheAge:         60,
+	RawSpecUrl:       "doc.json",
+	ForceOffline:     true,
+	FallbackCacheAge: 86400,
 }
 ```
