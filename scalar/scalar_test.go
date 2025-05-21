@@ -450,3 +450,15 @@ func TestCorrectHtmlRendering(t *testing.T) {
 	assert.Contains(t, htmlContent, "function initScalar()")
 	assert.Contains(t, htmlContent, "createApiReference('#app'")
 }
+
+func TestFallbackCache(t *testing.T) {
+	app := setupApp()
+	app.Use(New())
+
+	req := httptest.NewRequest(http.MethodGet, "/docs/js/api-reference.min.js", nil)
+	resp, err := app.Test(req)
+	assert.NoError(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+
+	assert.Equal(t, "public, max-age=86400", resp.Header.Get("Cache-Control"))
+}
