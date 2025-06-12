@@ -14,8 +14,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate GitHub App Token
+        uses: tibdex/github-app-token@v2
+        id: generate-token
+        with:
+          app_id: ${{ vars.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Get latest version from npm
         id: get_version
@@ -50,7 +60,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
@@ -63,4 +73,4 @@ jobs:
             scalar/scalar-version.txt
           labels: |
             🤖 Dependencies
-          assignees: yokeTH
+          reviewers: yokeTH
