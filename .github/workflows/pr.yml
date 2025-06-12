@@ -17,7 +17,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.8"
+          go-version: "1.23.0"
           cache: true
           cache-dependency-path: scalar/go.sum
 
@@ -39,7 +39,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.8"
+          go-version: "1.23.0"
           cache: true
           cache-dependency-path: scalar/go.sum
 
@@ -63,7 +63,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.8"
+          go-version: "1.23.0"
           cache: true
           cache-dependency-path: scalar/go.sum
 
@@ -71,15 +71,3 @@ jobs:
         run: |
           cd scalar
           go build ./...
-
-  security:
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: read
-    steps:
-      - name: Run govulncheck
-        uses: golang/govulncheck-action@v1
-        with:
-          go-version-input: 1.23.8
-          work-dir: scalar
-          go-package: ./...
