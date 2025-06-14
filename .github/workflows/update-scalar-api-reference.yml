@@ -62,7 +62,7 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
-          committer: yoketh-bot[bot] <1400162+yoketh-bot[bot]@users.noreply.github.com>
+          committer: yoketh[bot] <1400162+yoketh[bot]@users.noreply.github.com>
           title: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           body: "This PR updates `scalar.min.js` to the latest version of the Scalar API Reference."
           branch: update-scalar-${{ steps.get_version.outputs.version }}
