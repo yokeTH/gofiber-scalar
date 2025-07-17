@@ -35,8 +35,13 @@ type Config struct {
 
 	// CacheAge defines the max-age for the Cache-Control header in seconds.
 	//
-	// Optional. Default: 1 min (no cache)
+	// Optional. Default: 1 min
 	CacheAge int
+
+	// Scalar theme
+	//
+	// Optional. Default: ThemeNone
+	Theme Theme
 
 	// Custom Scalar Style
 	// Ref: https://github.com/scalar/scalar/blob/main/packages/themes/src/variables.css
@@ -67,6 +72,7 @@ var configDefault = Config{
 	Path:             "docs",
 	Title:            "Fiber API documentation",
 	CacheAge:         60,
+	Theme:            ThemeNone,
 	RawSpecUrl:       "doc.json",
 	ForceOffline:     true,
 	FallbackCacheAge: 86400,

@@ -49,6 +49,9 @@ const templateHTML = `
             {{- if .ProxyUrl}}
             proxyUrl: "{{.ProxyUrl}}",
             {{ end }}
+            {{- if .Theme}}
+            theme: "{{.Theme}}"
+            {{ end }}
           });
         } else {
           console.error("Failed to load Scalar API Reference");
