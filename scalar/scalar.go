@@ -40,6 +40,9 @@ func New(config ...Config) fiber.Handler {
 		if cfg.FallbackCacheAge == 0 {
 			cfg.FallbackCacheAge = configDefault.FallbackCacheAge
 		}
+		if cfg.Theme == "" {
+			cfg.Theme = ThemeNone
+		}
 	}
 
 	rawSpec := cfg.FileContentString
