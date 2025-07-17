@@ -10,6 +10,7 @@ Scalar middleware for [Fiber](https://github.com/gofiber/fiber). The middleware 
 - [Examples](#examples)
 - [Config](#config)
 - [Default Config](#default-config)
+- [Constants](#Constants)
 
 ### Signatures
 ```go
@@ -63,17 +64,6 @@ app.Get("/yourpath/*", scalar.New(scalar.Config{
 }))
 ```
 
-Using a custom config:
-```go
-cfg := scalar.Config{
-    BasePath: "/",
-    Path:     "swagger", // replace original swagger path
-    Title:    "Your app API Docs",
-}
-
-app.Use(scalar.New(cfg))
-```
-
 Use program data for Swagger content:
 ```go
 cfg := scalar.Config{
@@ -81,6 +71,15 @@ cfg := scalar.Config{
     FileContentString: jsonString,
     Path:              "scalar",
     Title:             "Scalar API Docs",
+}
+
+app.Use(scalar.New(cfg))
+```
+
+Use scalar prepared theme
+```go
+cfg := scalar.Config{
+    Theme:    scalar.ThemeMars,
 }
 
 app.Use(scalar.New(cfg))
@@ -116,8 +115,13 @@ type Config struct {
 
 	// CacheAge defines the max-age for the Cache-Control header in seconds.
 	//
-	// Optional. Default: 1 min (no cache)
+	// Optional. Default: 1 min
 	CacheAge int
+
+	// Scalar theme
+	//
+	// Optional. Default: ThemeNone
+	Theme Theme
 
 	// Custom Scalar Style
 	// Ref: https://github.com/scalar/scalar/blob/main/packages/themes/src/variables.css
@@ -151,8 +155,28 @@ var configDefault = Config{
 	Path:             "docs",
 	Title:            "Fiber API documentation",
 	CacheAge:         60,
+	Theme:            ThemeNone,
 	RawSpecUrl:       "doc.json",
 	ForceOffline:     true,
 	FallbackCacheAge: 86400,
 }
+```
+
+### Constants
+Theme
+```go
+const (
+	ThemeAlternate  Theme = "alternate"
+	ThemeDefault    Theme = "default"
+	ThemeMoon       Theme = "moon"
+	ThemePurple     Theme = "purple"
+	ThemeSolarized  Theme = "solarized"
+	ThemeBluePlanet Theme = "bluePlanet"
+	ThemeSaturn     Theme = "saturn"
+	ThemeKepler     Theme = "kepler"
+	ThemeMars       Theme = "mars"
+	ThemeDeepSpace  Theme = "deepSpace"
+	ThemeLaserwave  Theme = "laserwave"
+	ThemeNone       Theme = "none"
+)
 ```
