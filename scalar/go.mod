@@ -5,7 +5,7 @@ go 1.23.0
 require (
 	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/stretchr/testify v1.10.0
-	github.com/swaggo/swag v1.16.5
+	github.com/swaggo/swag v1.16.6
 )
 
 require (
