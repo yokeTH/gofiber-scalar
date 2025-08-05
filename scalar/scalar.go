@@ -46,7 +46,7 @@ func New(config ...Config) fiber.Handler {
 	}
 
 	rawSpec := cfg.FileContentString
-	if len(rawSpec) == 0 && len(cfg.specURL) == 0 {
+	if len(rawSpec) == 0 && len(cfg.RawSpecUrl) == 0 {
 		doc, err := swag.ReadDoc()
 		if err != nil {
 			panic(err)
