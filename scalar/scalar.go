@@ -7,7 +7,7 @@ import (
 	"text/template"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/swaggo/swag"
+	"github.com/swaggo/swag/v2"
 )
 
 //go:embed scalar.min.js
