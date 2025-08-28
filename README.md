@@ -2,7 +2,7 @@
 
 Scalar middleware for [Fiber](https://github.com/gofiber/fiber). The middleware handles Scalar UI.
 
-**Note: Requires Go 1.23.0 and above**
+**Note: Requires Go 1.25.0 and above**
 
 ### Table of Contents
 - [Signatures](#signatures)
@@ -24,7 +24,7 @@ go mod init github.com/<user>/<repo>
 ```
 And then install the Scalar middleware:
 ```bash
-go get -u github.com/yokeTH/gofiber-scalar/scalar/v2
+go get -u github.com/yokeTH/gofiber-scalar/scalar/v3
 ```
 
 ### Examples
@@ -38,15 +38,15 @@ Import the middleware package and generated docs
 import (
   "YOUR_MODULE/docs"
 
-  "github.com/gofiber/fiber/v2"
-  "github.com/yokeTH/gofiber-scalar/scalar/v2"
+  "github.com/gofiber/fiber/v3"
+  "github.com/yokeTH/gofiber-scalar/scalar/v3"
   "github.com/swaggo/swag/v2"
 )
 ```
 
 After Imported:
 
-> For v2, you do not need to register Swag docs manually.
+> For v2 and v3, you do not need to register Swag docs manually.
 
 Using the default config:
 ```go
