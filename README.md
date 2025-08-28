@@ -40,7 +40,6 @@ import (
 
   "github.com/gofiber/fiber/v2"
   "github.com/yokeTH/gofiber-scalar/scalar/v2"
-  "github.com/swaggo/swag/v2"
 )
 ```
 
