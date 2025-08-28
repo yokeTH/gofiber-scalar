@@ -6,7 +6,7 @@ import (
 	"path"
 	"text/template"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	"github.com/swaggo/swag/v2"
 )
 
@@ -77,7 +77,7 @@ func New(config ...Config) fiber.Handler {
 
 	htmlData.Extra["FallbackUrl"] = jsFallbackPath
 
-	return func(ctx *fiber.Ctx) error {
+	return func(ctx fiber.Ctx) error {
 		if cfg.Next != nil && cfg.Next(ctx) {
 			return ctx.Next()
 		}

@@ -10,7 +10,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	"github.com/stretchr/testify/assert"
 	"github.com/swaggo/swag/v2"
 )
@@ -66,7 +66,7 @@ func TestDefault(t *testing.T) {
 			name:        "Should be returns status 200 with 'text/html' content-type",
 			url:         "/docs",
 			statusCode:  200,
-			contentType: "text/html",
+			contentType: "text/html; charset=utf-8",
 		},
 		{
 			name:        "Should be returns status 200 with 'application/json' content-type",
@@ -130,7 +130,7 @@ func TestCustomBasePath(t *testing.T) {
 			name:        "Should be returns status 200 with custom base path",
 			url:         "/api/docs",
 			statusCode:  200,
-			contentType: "text/html",
+			contentType: "text/html; charset=utf-8",
 		},
 		{
 			name:        "Should be returns status 200 for spec with custom base path",
@@ -175,7 +175,7 @@ func TestCustomPath(t *testing.T) {
 			name:        "Should be returns status 200 with custom path",
 			url:         "/api-docs",
 			statusCode:  200,
-			contentType: "text/html",
+			contentType: "text/html; charset=utf-8",
 		},
 		{
 			name:        "Should be returns status 200 for spec with custom path",
@@ -342,12 +342,12 @@ func TestNextFunction(t *testing.T) {
 	app := setupApp()
 
 	app.Use(New(Config{
-		Next: func(c *fiber.Ctx) bool {
+		Next: func(c fiber.Ctx) bool {
 			return true
 		},
 	}))
 
-	app.Get("/docs", func(c *fiber.Ctx) error {
+	app.Get("/docs", func(c fiber.Ctx) error {
 		return c.SendString("Next handler called")
 	})
 
@@ -397,7 +397,7 @@ func TestCombinedConfigurations(t *testing.T) {
 			name:        "Should be returns status 200 with combined configurations",
 			url:         "/api/swagger",
 			statusCode:  200,
-			contentType: "text/html",
+			contentType: "text/html; charset=utf-8",
 		},
 		{
 			name:        "Should be returns status 200 for spec with combined configurations",
