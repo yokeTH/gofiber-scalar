@@ -24,7 +24,7 @@ go mod init github.com/<user>/<repo>
 ```
 And then install the Scalar middleware:
 ```bash
-go get -u github.com/yokeTH/gofiber-scalar/scalar
+go get -u github.com/yokeTH/gofiber-scalar/scalar/v2
 ```
 
 ### Examples
@@ -39,16 +39,14 @@ import (
   "YOUR_MODULE/docs"
 
   "github.com/gofiber/fiber/v2"
-  "github.com/yokeTH/gofiber-scalar/scalar"
-  "github.com/swaggo/swag" // for register docs DO NOT USE v2
+  "github.com/yokeTH/gofiber-scalar/scalar/v2"
+  "github.com/swaggo/swag/v2"
 )
 ```
 
 After Imported:
-Register Swag the Docs
-```go
-swag.Register(docs.SwaggerInfo.InstanceName(), docs.SwaggerInfo)
-```
+
+> For v2, you do not need to register Swag docs manually.
 
 Using the default config:
 ```go
