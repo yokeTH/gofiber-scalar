@@ -4,7 +4,11 @@ go 1.23.0
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.9
+<<<<<<< HEAD
 	github.com/stretchr/testify v1.11.1
+=======
+	github.com/stretchr/testify v1.11.0
+>>>>>>> 32c25be (feat: update test to v2)
 	github.com/swaggo/swag/v2 v2.0.0-rc4
 )
 
