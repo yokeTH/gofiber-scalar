@@ -1,3 +1,6 @@
+> [!NOTE]
+> Fiber v3 is currently in development and in the release candidate (RC) stage. Since gofiber-scalar follows the same release cycle, it is also in RC. If you’re using Fiber v3, install it with: `go get -u github.com/yokeTH/gofiber-scalar/scalar/v3`
+
 # Gofiber Scalar
 
 Scalar middleware for [Fiber](https://github.com/gofiber/fiber). The middleware handles Scalar UI.
