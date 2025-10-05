@@ -1,4 +1,4 @@
-name: Update Scalar API Reference v2
+name: Update Scalar API Reference v3
 
 on:
   schedule:
@@ -26,7 +26,7 @@ jobs:
         with:
           lfs: true
           token: ${{ steps.generate-token.outputs.token }}
-          ref: main
+          ref: v3
 
       - name: Get latest version from npm
         id: get_version
@@ -68,7 +68,7 @@ jobs:
           body: "This PR updates `scalar.min.js` to the latest version of the Scalar API Reference."
           branch: update-scalar-${{ steps.get_version.outputs.version }}
           delete-branch: true
-          base: main
+          base: v3
           add-paths: |
             scalar/scalar.min.js
             scalar/scalar-version.txt
