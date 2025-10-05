@@ -36,11 +36,10 @@ swag init -v3.1
 Import the middleware package and generated docs
 ```go
 import (
-  "YOUR_MODULE/docs"
+  _ "YOUR_MODULE/docs"
 
   "github.com/gofiber/fiber/v3"
   "github.com/yokeTH/gofiber-scalar/scalar/v3"
-  "github.com/swaggo/swag/v2"
 )
 ```
 
