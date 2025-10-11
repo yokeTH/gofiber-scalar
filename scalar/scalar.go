@@ -16,7 +16,6 @@ var embeddedJS []byte
 func New(config ...Config) fiber.Handler {
 	// Set default config
 	cfg := configDefault
-	isParsedURL := true
 
 	// Override config if provided
 	if len(config) > 0 {
@@ -34,7 +33,6 @@ func New(config ...Config) fiber.Handler {
 		}
 		if len(cfg.RawSpecUrl) == 0 {
 			cfg.RawSpecUrl = configDefault.RawSpecUrl
-			isParsedURL = false
 		}
 		if !cfg.ForceOffline {
 			cfg.ForceOffline = configDefault.ForceOffline
@@ -48,7 +46,7 @@ func New(config ...Config) fiber.Handler {
 	}
 
 	rawSpec := cfg.FileContentString
-	if len(rawSpec) == 0 && isParsedURL {
+	if len(rawSpec) == 0 {
 		doc, err := swag.ReadDoc()
 		if err != nil {
 			panic(err)
