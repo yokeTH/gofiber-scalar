@@ -66,7 +66,7 @@ jobs:
           committer: yoketh[bot] <1400162+yoketh[bot]@users.noreply.github.com>
           title: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           body: "This PR updates `scalar.min.js` to the latest version of the Scalar API Reference."
-          branch: update-scalar-${{ steps.get_version.outputs.version }}
+          branch: update-scalar-${{ steps.get_version.outputs.version }}-v2
           delete-branch: true
           base: main
           add-paths: |
