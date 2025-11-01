@@ -58,7 +58,7 @@ type Config struct {
 
 	// ForceOffline
 	// Optional: Default: true
-	ForceOffline bool
+	ForceOffline *bool
 
 	// Fallback scalar cache
 	//
@@ -74,6 +74,15 @@ var configDefault = Config{
 	CacheAge:         60,
 	Theme:            ThemeNone,
 	RawSpecUrl:       "doc.json",
-	ForceOffline:     true,
+	ForceOffline:     ForceOfflineTrue,
 	FallbackCacheAge: 86400,
 }
+
+func ptr[T any](v T) *T {
+	return &v
+}
+
+var (
+	ForceOfflineTrue  = ptr(true)
+	ForceOfflineFalse = ptr(false)
+)
