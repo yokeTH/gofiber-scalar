@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"path"
+	"strings"
 	"text/template"
 
 	"github.com/gofiber/fiber/v2"
@@ -56,10 +57,6 @@ func New(config ...Config) fiber.Handler {
 
 	cfg.FileContentString = string(rawSpec)
 
-	scalarUIPath := path.Join(cfg.BasePath, cfg.Path)
-	specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
-	jsFallbackPath := path.Join(scalarUIPath, "/js/api-reference.min.js")
-
 	html, err := template.New("index.html").Parse(templateHTML)
 	if err != nil {
 		panic(fmt.Errorf("failed to parse html template:%v", err))
@@ -84,15 +81,23 @@ func New(config ...Config) fiber.Handler {
 		Extra:        map[string]any{},
 	}
 
-	htmlData.Extra["FallbackUrl"] = jsFallbackPath
-
 	return func(ctx *fiber.Ctx) error {
 		if cfg.Next != nil && cfg.Next(ctx) {
 			return ctx.Next()
 		}
 
+		resolvedBasePath := cfg.BasePath
+		if xf := ctx.Get("X-Forwarded-Prefix"); xf != "" {
+			resolvedBasePath = xf
+		} else if xf2 := ctx.Get("X-Forwarded-Path"); xf2 != "" {
+			resolvedBasePath = xf2
+		}
+		scalarUIPath := cfg.Path
+		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
+		jsFallbackPath := path.Join(resolvedBasePath, scalarUIPath, "/js/api-reference.min.js")
+
 		// fallback js
-		if ctx.Path() == jsFallbackPath {
+		if strings.HasSuffix(jsFallbackPath, ctx.Path()) {
 			ctx.Set("Cache-Control", fmt.Sprintf("public, max-age=%d", cfg.FallbackCacheAge))
 			return ctx.Send(embeddedJS)
 		}
@@ -108,10 +113,11 @@ func New(config ...Config) fiber.Handler {
 			return ctx.SendString(rawSpec)
 		}
 
-		if ctx.Path() != scalarUIPath && ctx.Path() != specURL {
+		if !strings.HasPrefix(ctx.Path(), scalarUIPath) && ctx.Path() != specURL && strings.HasSuffix(jsFallbackPath, ctx.Path()) {
 			return ctx.Next()
 		}
 
+		htmlData.Extra["FallbackUrl"] = jsFallbackPath
 		ctx.Type("html")
 		return html.Execute(ctx, htmlData)
 	}
