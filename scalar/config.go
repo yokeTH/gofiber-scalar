@@ -69,7 +69,7 @@ type Config struct {
 var configDefault = Config{
 	Next:             nil,
 	BasePath:         "/",
-	Path:             "docs",
+	Path:             "/docs",
 	Title:            "Fiber API documentation",
 	CacheAge:         60,
 	Theme:            ThemeNone,

@@ -93,7 +93,7 @@ func New(config ...Config) fiber.Handler {
 			resolvedBasePath = xf2
 		}
 		scalarUIPath := cfg.Path
-		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
+		specURL := path.Join("/", scalarUIPath, cfg.RawSpecUrl)
 		jsFallbackPath := path.Join(resolvedBasePath, scalarUIPath, "/js/api-reference.min.js")
 
 		// fallback js
