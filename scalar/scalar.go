@@ -97,7 +97,7 @@ func New(config ...Config) fiber.Handler {
 		jsFallbackPath := path.Join(resolvedBasePath, scalarUIPath, "/js/api-reference.min.js")
 
 		// fallback js
-		if ctx.Path() == jsFallbackPath {
+		if strings.HasSuffix(jsFallbackPath, ctx.Path()) {
 			ctx.Set("Cache-Control", fmt.Sprintf("public, max-age=%d", cfg.FallbackCacheAge))
 			return ctx.Send(embeddedJS)
 		}
@@ -113,7 +113,7 @@ func New(config ...Config) fiber.Handler {
 			return ctx.SendString(rawSpec)
 		}
 
-		if !strings.HasPrefix(ctx.Path(), scalarUIPath) && ctx.Path() != specURL && ctx.Path() != jsFallbackPath {
+		if !strings.HasPrefix(ctx.Path(), scalarUIPath) && ctx.Path() != specURL && strings.HasSuffix(jsFallbackPath, ctx.Path()) {
 			return ctx.Next()
 		}
 
