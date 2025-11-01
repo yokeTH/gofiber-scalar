@@ -34,7 +34,7 @@ func New(config ...Config) fiber.Handler {
 		if len(cfg.RawSpecUrl) == 0 {
 			cfg.RawSpecUrl = configDefault.RawSpecUrl
 		}
-		if !cfg.ForceOffline {
+		if cfg.ForceOffline == nil {
 			cfg.ForceOffline = configDefault.ForceOffline
 		}
 		if cfg.FallbackCacheAge == 0 {
@@ -65,12 +65,23 @@ func New(config ...Config) fiber.Handler {
 		panic(fmt.Errorf("failed to parse html template:%v", err))
 	}
 
+	var forceOfflineResolved bool
+	if cfg.ForceOffline != nil {
+		forceOfflineResolved = *cfg.ForceOffline
+	} else if configDefault.ForceOffline != nil {
+		forceOfflineResolved = *configDefault.ForceOffline
+	} else {
+		forceOfflineResolved = false
+	}
+
 	htmlData := struct {
 		Config
-		Extra map[string]any
+		ForceOffline bool
+		Extra        map[string]any
 	}{
-		Config: cfg,
-		Extra:  map[string]any{},
+		Config:       cfg,
+		ForceOffline: forceOfflineResolved,
+		Extra:        map[string]any{},
 	}
 
 	htmlData.Extra["FallbackUrl"] = jsFallbackPath
