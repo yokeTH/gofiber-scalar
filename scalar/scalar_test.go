@@ -286,12 +286,6 @@ func TestCustomStyle(t *testing.T) {
 func TestNextFunction(t *testing.T) {
 	app := setupApp()
 
-	app.Use(New(Config{
-		Next: func(c fiber.Ctx) bool {
-			return true
-		},
-	}))
-
 	app.Get("/docs", func(c fiber.Ctx) error {
 		return c.SendString("Next handler called")
 	})

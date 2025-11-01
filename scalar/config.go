@@ -2,16 +2,10 @@ package scalar
 
 import (
 	"html/template"
-
-	"github.com/gofiber/fiber/v3"
 )
 
 // Config defines the config for middleware.
 type Config struct {
-	// Next defines a function to skip this middleware when returned true.
-	//
-	// Optional. Default: nil
-	Next func(c fiber.Ctx) bool
 
 	// BasePath for the UI path
 	//
@@ -67,7 +61,6 @@ type Config struct {
 }
 
 var configDefault = Config{
-	Next:             nil,
 	BasePath:         "/",
 	Path:             "/docs",
 	Title:            "Fiber API documentation",
