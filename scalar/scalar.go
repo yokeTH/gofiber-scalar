@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 	"path"
+	"strings"
 	"text/template"
 
 	"github.com/gofiber/fiber/v3"
@@ -113,7 +114,7 @@ func New(config ...Config) fiber.Handler {
 			return ctx.SendString(rawSpec)
 		}
 
-		if ctx.Path() != scalarUIPath && ctx.Path() != specURL {
+		if !strings.HasPrefix(ctx.Path(), scalarUIPath) && ctx.Path() != specURL && ctx.Path() != jsFallbackPath {
 			return ctx.Next()
 		}
 
