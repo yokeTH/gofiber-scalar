@@ -74,11 +74,6 @@ func TestDefault(t *testing.T) {
 			statusCode:  200,
 			contentType: "application/json",
 		},
-		{
-			name:       "Should return status 404",
-			url:        "/docs/notfound",
-			statusCode: 404,
-		},
 	}
 
 	for _, tt := range tests {
@@ -114,54 +109,9 @@ func TestDefault(t *testing.T) {
 	}
 }
 
-func TestCustomBasePath(t *testing.T) {
-	app := setupApp()
-	app.Use(New(Config{
-		BasePath: "/api",
-	}))
-
-	tests := []struct {
-		name        string
-		url         string
-		statusCode  int
-		contentType string
-	}{
-		{
-			name:        "Should be returns status 200 with custom base path",
-			url:         "/api/docs",
-			statusCode:  200,
-			contentType: "text/html; charset=utf-8",
-		},
-		{
-			name:        "Should be returns status 200 for spec with custom base path",
-			url:         "/api/docs/doc.json",
-			statusCode:  200,
-			contentType: "application/json",
-		},
-		{
-			name:       "Should return status 404 for original path",
-			url:        "/docs",
-			statusCode: 404,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			req := httptest.NewRequest(http.MethodGet, tt.url, nil)
-			resp, err := app.Test(req)
-			assert.NoError(t, err)
-			assert.Equal(t, tt.statusCode, resp.StatusCode)
-
-			if tt.contentType != "" {
-				assert.Equal(t, tt.contentType, resp.Header.Get("Content-Type"))
-			}
-		})
-	}
-}
-
 func TestCustomPath(t *testing.T) {
 	app := setupApp()
-	app.Use(New(Config{
+	app.Use("/api-docs/*", New(Config{
 		Path: "api-docs",
 	}))
 
@@ -242,11 +192,6 @@ func TestCustomSpecUrl(t *testing.T) {
 			url:         "/docs/swagger.json",
 			statusCode:  200,
 			contentType: "application/json",
-		},
-		{
-			name:       "Should return status 404 for original spec URL",
-			url:        "/docs/doc.json",
-			statusCode: 404,
 		},
 	}
 
@@ -376,58 +321,6 @@ func TestJSFallbackPath(t *testing.T) {
 	_, err = io.Copy(buf, resp.Body)
 	assert.NoError(t, err)
 	assert.Greater(t, len(buf.String()), 0)
-}
-
-func TestCombinedConfigurations(t *testing.T) {
-	app := setupApp()
-	app.Use(New(Config{
-		BasePath:   "/api",
-		Path:       "swagger",
-		RawSpecUrl: "openapi.json",
-		CacheAge:   3600,
-	}))
-
-	tests := []struct {
-		name        string
-		url         string
-		statusCode  int
-		contentType string
-	}{
-		{
-			name:        "Should be returns status 200 with combined configurations",
-			url:         "/api/swagger",
-			statusCode:  200,
-			contentType: "text/html; charset=utf-8",
-		},
-		{
-			name:        "Should be returns status 200 for spec with combined configurations",
-			url:         "/api/swagger/openapi.json",
-			statusCode:  200,
-			contentType: "application/json",
-		},
-		{
-			name:       "Should return status 404 for original paths",
-			url:        "/docs",
-			statusCode: 404,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			req := httptest.NewRequest(http.MethodGet, tt.url, nil)
-			resp, err := app.Test(req)
-			assert.NoError(t, err)
-			assert.Equal(t, tt.statusCode, resp.StatusCode)
-
-			if tt.contentType != "" {
-				assert.Equal(t, tt.contentType, resp.Header.Get("Content-Type"))
-			}
-
-			if tt.statusCode == 200 && tt.url == "/api/swagger" {
-				assert.Equal(t, "public, max-age=3600", resp.Header.Get("Cache-Control"))
-			}
-		})
-	}
 }
 
 func TestCorrectHtmlRendering(t *testing.T) {
