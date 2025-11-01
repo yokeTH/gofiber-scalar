@@ -91,6 +91,7 @@ func New(config ...Config) fiber.Handler {
 		} else if xf2 := ctx.Get("X-Forwarded-Path"); xf2 != "" {
 			effectiveBase = xf2
 		}
+		fmt.Printf("effectiveBase: %v\n", effectiveBase)
 		scalarUIPath := path.Join(effectiveBase, cfg.Path)
 		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
 		jsFallbackPath := path.Join(scalarUIPath, "/js/api-reference.min.js")
