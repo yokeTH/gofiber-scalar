@@ -82,10 +82,6 @@ func New(config ...Config) fiber.Handler {
 	}
 
 	return func(ctx *fiber.Ctx) error {
-		if cfg.Next != nil && cfg.Next(ctx) {
-			return ctx.Next()
-		}
-
 		resolvedBasePath := cfg.BasePath
 		if xf := ctx.Get("X-Forwarded-Prefix"); xf != "" {
 			resolvedBasePath = xf
