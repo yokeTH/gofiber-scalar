@@ -94,7 +94,7 @@ func New(config ...Config) fiber.Handler {
 		}
 		scalarUIPath := cfg.Path
 		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
-		jsFallbackPath := path.Join(resolvedBasePath, "/js/api-reference.min.js")
+		jsFallbackPath := path.Join(resolvedBasePath, scalarUIPath, "/js/api-reference.min.js")
 
 		// fallback js
 		if ctx.Path() == jsFallbackPath {
