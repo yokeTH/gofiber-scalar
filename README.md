@@ -85,10 +85,14 @@ app.Get("/docs/*", scalar.New(cfg))
 ```
 
 #### Path based reverse proxy
-Assuming `/api` is your reverse path, please include the following headers:
-- `X-Forwarded-Prefix`
-- `X-Forwarded-Path`
-If you are unable to configure headers, you can alternatively use the `BasePath` setting. However, note that this may not work correctly in a localhost environment. You could implement it like this:
+Assuming `/api` is your reverse path, the configuration will use the following order to determine the path:
+
+1. `X-Forwarded-Prefix`
+2. `X-Forwarded-Path`
+3. `BasePath` (fallback if the headers are not set)
+
+If you cannot configure the headers, you can use `BasePath` as a fallback. Note that this may break in a localhost environment. Example implementation:
+
 ```go
 cfg = scalar.Config{}
 if os.Getenv("APP_ENV") == "PROD" {
