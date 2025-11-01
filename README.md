@@ -49,7 +49,7 @@ After Imported:
 
 > For v2 and v3, you do not need to register Swag docs manually.
 
-Using the default config:
+#### Using the default config:
 ```go
 app.Get("/docs/*", scalar.New())
 ```
@@ -63,7 +63,7 @@ app.Get("/yourpath/*", scalar.New(scalar.Config{
 }))
 ```
 
-Use program data for Swagger content:
+#### Use program data for Swagger content:
 ```go
 cfg := scalar.Config{
     BasePath:          "/",
@@ -75,13 +75,13 @@ cfg := scalar.Config{
 app.Get("/scalar/*", scalar.New(cfg))
 ```
 
-Use scalar prepared theme
+#### Use scalar prepared theme
 ```go
 cfg := scalar.Config{
     Theme:    scalar.ThemeMars,
 }
 
-app.Use("/docs/*", scalar.New(cfg))
+app.Get("/docs/*", scalar.New(cfg))
 ```
 
 #### Path based reverse proxy
@@ -95,7 +95,6 @@ if os.Getenv("APP_ENV") == "PROD" {
     cfg.BasePath = "/api"
 }
 ```
-
 
 ### Config
 ```go
