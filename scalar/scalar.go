@@ -86,16 +86,15 @@ func New(config ...Config) fiber.Handler {
 			return ctx.Next()
 		}
 
-		effectiveBase := cfg.BasePath
+		resolvedBasePath := cfg.BasePath
 		if xf := ctx.Get("X-Forwarded-Prefix"); xf != "" {
-			effectiveBase = xf
+			resolvedBasePath = xf
 		} else if xf2 := ctx.Get("X-Forwarded-Path"); xf2 != "" {
-			effectiveBase = xf2
+			resolvedBasePath = xf2
 		}
-		fmt.Printf("effectiveBase: %v\n", effectiveBase)
-		scalarUIPath := path.Join(effectiveBase, cfg.Path)
+		scalarUIPath := cfg.Path
 		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
-		jsFallbackPath := path.Join(scalarUIPath, "/js/api-reference.min.js")
+		jsFallbackPath := path.Join(resolvedBasePath, "/js/api-reference.min.js")
 
 		// fallback js
 		if ctx.Path() == jsFallbackPath {
