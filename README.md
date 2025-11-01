@@ -54,7 +54,7 @@ After Imported:
 
 #### Using the default config:
 ```go
-app.Use("/docs/*", scalar.New())
+app.Get("/docs/*", scalar.New())
 ```
 Now you can access scalar API documentation UI at `{HOSTNAME}/docs` and JSON documentation at `{HOSTNAME}/docs/doc.json`. Additionally, you can modify the path by configuring the middleware to suit your application's requirements.
 
