@@ -137,8 +137,8 @@ type Config struct {
 	RawSpecUrl string
 
 	// ForceOffline
-	// Optional: Default: true
-	ForceOffline bool
+	// Optional: Default: ForceOfflineTrue
+	ForceOffline *bool
 
 	// Fallback scalar cache
 	//
@@ -157,7 +157,7 @@ var configDefault = Config{
 	CacheAge:         60,
 	Theme:            ThemeNone,
 	RawSpecUrl:       "doc.json",
-	ForceOffline:     true,
+	ForceOffline:     ForceOfflineTrue,
 	FallbackCacheAge: 86400,
 }
 ```
@@ -178,5 +178,10 @@ const (
 	ThemeDeepSpace  Theme = "deepSpace"
 	ThemeLaserwave  Theme = "laserwave"
 	ThemeNone       Theme = "none"
+)
+
+var (
+	ForceOfflineTrue  = ptr(true)
+	ForceOfflineFalse = ptr(false)
 )
 ```
