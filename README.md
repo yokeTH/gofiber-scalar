@@ -30,6 +30,8 @@ go get -u github.com/yokeTH/gofiber-scalar/scalar/v3
 ### Examples
 Using swaggo to generate documents default output path is `(root)/docs`:
 ```bash
+swag init
+# if you use swag-v2
 swag init -v3.1
 ```
 
@@ -49,7 +51,7 @@ After Imported:
 
 Using the default config:
 ```go
-app.Use(scalar.New())
+app.Get("/docs/*", scalar.New())
 ```
 Now you can access scalar API documentation UI at `{HOSTNAME}/docs` and JSON documentation at `{HOSTNAME}/docs/doc.json`. Additionally, you can modify the path by configuring the middleware to suit your application's requirements.
 
@@ -66,11 +68,11 @@ Use program data for Swagger content:
 cfg := scalar.Config{
     BasePath:          "/",
     FileContentString: jsonString,
-    Path:              "scalar",
+    Path:              "/scalar",
     Title:             "Scalar API Docs",
 }
 
-app.Use(scalar.New(cfg))
+app.Get("/scalar/*", scalar.New(cfg))
 ```
 
 Use scalar prepared theme
@@ -79,17 +81,25 @@ cfg := scalar.Config{
     Theme:    scalar.ThemeMars,
 }
 
-app.Use(scalar.New(cfg))
+app.Use("/docs/*", scalar.New(cfg))
 ```
+
+#### Path based reverse proxy
+Assuming `/api` is your reverse path, please include the following headers:
+- `X-Forwarded-Prefix`
+- `X-Forwarded-Path`
+If you are unable to configure headers, you can alternatively use the `BasePath` setting. However, note that this may not work correctly in a localhost environment. You could implement it like this:
+```go
+cfg = scalar.Config{}
+if os.Getenv("APP_ENV") == "PROD" {
+    cfg.BasePath = "/api"
+}
+```
+
 
 ### Config
 ```go
 type Config struct {
-	// Next defines a function to skip this middleware when returned true.
-	//
-	// Optional. Default: nil
-	Next func(c *fiber.Ctx) bool
-
 	// BasePath for the UI path
 	//
 	// Optional. Default: /
@@ -147,7 +157,6 @@ type Config struct {
 ### Default Config
 ```go
 var configDefault = Config{
-	Next:             nil,
 	BasePath:         "/",
 	Path:             "docs",
 	Title:            "Fiber API documentation",
