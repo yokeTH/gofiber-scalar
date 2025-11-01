@@ -56,10 +56,6 @@ func New(config ...Config) fiber.Handler {
 
 	cfg.FileContentString = string(rawSpec)
 
-	scalarUIPath := path.Join(cfg.BasePath, cfg.Path)
-	specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
-	jsFallbackPath := path.Join(scalarUIPath, "/js/api-reference.min.js")
-
 	html, err := template.New("index.html").Parse(templateHTML)
 	if err != nil {
 		panic(fmt.Errorf("failed to parse html template:%v", err))
@@ -84,12 +80,20 @@ func New(config ...Config) fiber.Handler {
 		Extra:        map[string]any{},
 	}
 
-	htmlData.Extra["FallbackUrl"] = jsFallbackPath
-
 	return func(ctx fiber.Ctx) error {
 		if cfg.Next != nil && cfg.Next(ctx) {
 			return ctx.Next()
 		}
+
+		effectiveBase := cfg.BasePath
+		if xf := ctx.Get("X-Forwarded-Prefix"); xf != "" {
+			effectiveBase = xf
+		} else if xf2 := ctx.Get("X-Forwarded-Path"); xf2 != "" {
+			effectiveBase = xf2
+		}
+		scalarUIPath := path.Join(effectiveBase, cfg.Path)
+		specURL := path.Join(scalarUIPath, cfg.RawSpecUrl)
+		jsFallbackPath := path.Join(scalarUIPath, "/js/api-reference.min.js")
 
 		// fallback js
 		if ctx.Path() == jsFallbackPath {
@@ -112,6 +116,7 @@ func New(config ...Config) fiber.Handler {
 			return ctx.Next()
 		}
 
+		htmlData.Extra["FallbackUrl"] = jsFallbackPath
 		ctx.Type("html")
 		return html.Execute(ctx, htmlData)
 	}
