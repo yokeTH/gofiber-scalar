@@ -95,6 +95,7 @@ func New(config ...Config) fiber.Handler {
 		// fallback js
 		if strings.HasSuffix(jsFallbackPath, ctx.Path()) {
 			ctx.Set("Cache-Control", fmt.Sprintf("public, max-age=%d", cfg.FallbackCacheAge))
+			ctx.Set("Content-Type", "application/javascript; charset=utf-8")
 			return ctx.Send(embeddedJS)
 		}
 
