@@ -3,7 +3,7 @@ module github.com/yokeTH/gofiber-scalar/scalar/v2
 go 1.23.0
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/fiber/v2 v2.52.10
 	github.com/stretchr/testify v1.11.1
 	github.com/swaggo/swag/v2 v2.0.0-rc4
 )
