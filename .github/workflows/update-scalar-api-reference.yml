@@ -1,4 +1,4 @@
-name: Update Scalar API Reference
+name: Update Scalar API Reference v3
 
 on:
   schedule:
@@ -22,10 +22,11 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           lfs: true
           token: ${{ steps.generate-token.outputs.token }}
+          ref: v3
 
       - name: Get latest version from npm
         id: get_version
@@ -58,15 +59,16 @@ jobs:
           echo "${{ steps.get_version.outputs.version }}" > scalar/scalar-version.txt
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           committer: yoketh[bot] <1400162+yoketh[bot]@users.noreply.github.com>
           title: "Update Scalar API Reference to v${{ steps.get_version.outputs.version }}"
           body: "This PR updates `scalar.min.js` to the latest version of the Scalar API Reference."
-          branch: update-scalar-${{ steps.get_version.outputs.version }}
+          branch: update-scalar-${{ steps.get_version.outputs.version }}-v3
           delete-branch: true
+          base: v3
           add-paths: |
             scalar/scalar.min.js
             scalar/scalar-version.txt
