@@ -49,7 +49,7 @@ jobs:
           go test -v -coverprofile=coverage.out ./...
 
       - name: Save coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: scalar-coverage
           path: scalar/coverage.out
