@@ -19,7 +19,7 @@ type Config struct {
 
 	// Path combines with BasePath for the full UI path
 	//
-	// Optional. Default: docs
+	// Optional. Default: /docs
 	Path string
 
 	// Title for the documentation site

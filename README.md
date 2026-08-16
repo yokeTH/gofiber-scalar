@@ -117,7 +117,7 @@ type Config struct {
 
 	// Path combines with BasePath for the full UI path
 	//
-	// Optional. Default: docs
+	// Optional. Default: /docs
 	Path string
 
 	// Title for the documentation site
@@ -163,7 +163,7 @@ type Config struct {
 ```go
 var configDefault = Config{
 	BasePath:         "/",
-	Path:             "docs",
+	Path:             "/docs",
 	Title:            "Fiber API documentation",
 	CacheAge:         60,
 	Theme:            ThemeNone,
